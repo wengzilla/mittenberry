@@ -1,0 +1,31 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+// Note: If you use asset_path() here, your compiled boostrap_and_overrides.css will not 
+//       have the proper paths. So for now we use the absolute path.
+@fontAwesomeEotPath: '/assets/fontawesome-webfont.eot';
+@fontAwesomeWoffPath: '/assets/fontawesome-webfont.woff';
+@fontAwesomeTtfPath: '/assets/fontawesome-webfont.ttf';
+@fontAwesomeSvgPath: '/assets/fontawesome-webfont.svg';
+
+// Font Awesome
+@import "fontawesome";
+@sansFontFamily: "Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@btnPrimaryBackground: #fff;
+@btnPrimaryBackgroundHighlight: #305b6d;
+@btnWarningBackground: #f2884c;
+@btnWarningBackgroundHighlight: #c33c09;
+
+@navbarBackground: white;
+@navbarBackgroundHighlight: white;
+@navbarLinkColor: #118C4E;
+@navbarLinkColorHover: darken(@navbarLinkColor, 15%);
+
+@linkColor: #0088CC;
+@linkColorHover: darken(@linkColor, 15%);
+
+html, body {
+  height: 100% !important;
+}
