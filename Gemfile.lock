@@ -79,6 +79,7 @@ GEM
       multi_json (~> 1.0)
     ffi (1.1.5)
     fssm (0.2.9)
+    hashie (1.2.0)
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.4)
@@ -190,6 +191,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 3.2.1)
   compass-rails
+  hashie
   jquery-rails
   jquery-ui-rails
   money-rails

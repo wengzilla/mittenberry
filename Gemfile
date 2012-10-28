@@ -26,6 +26,7 @@ end
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'hashie'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

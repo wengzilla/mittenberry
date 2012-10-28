@@ -2,14 +2,13 @@ class PaymentsController < ApplicationController
   def create
     Stripe.api_key = "IaMZJiWB7nUekIFpvHsz36UOtO8Uo1TH"
 
-    order = Order.find_by_id(params[:order_id])
-    payment = Payment.new(:order => order, :payment_token => params[:stripe_token])
+    payment = Payment.new(:order => current_order, :payment_token => params[:stripe_token], :external_source => "Stripe")
     payment.charge
 
     unless payment.errors.any?
-      render :json => "successful"
+      render :json => "successful", :status => :created
     else
-      render :json => payment.errors
+      render :json => payment.errors, :status => :bad_request
     end
   end
 end

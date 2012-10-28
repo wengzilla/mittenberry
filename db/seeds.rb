@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-product = Product.create( name: "Snow", price: 24.99, photo: "mittenssnow.jpg", color: "#F8F8F8", sku:"090101")
-product = Product.create( name: "Heather Gray", price: 24.99, photo: "mittensgray.jpg", color: "#3B3D43", sku: "090102")
-product = Product.create( name: "Blush", price: 24.99, photo: "mittensblush.jpg", color: "#FFDDFF", sku:"090103")
+product = Product.create( name: "Snow Mittenberry", price: 24.99, photo: "mittenssnow.jpg", color_name: "Snow", color: "#F8F8F8", sku:"090101")
+product = Product.create( name: "Heather Gray Mittenberry", price: 24.99, photo: "mittensgray.jpg", color_name: "Heather Gray", color: "#3B3D43", sku: "090102")
+product = Product.create( name: "Blush Mittenberry", price: 24.99, photo: "mittensblush.jpg", color_name: "Blush", color: "#FFDDFF", sku:"090103")
 
 # User.create( name: "Admin", email: "admin@mittenberry.com", password: "hungry" )

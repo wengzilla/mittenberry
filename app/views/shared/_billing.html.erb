@@ -1,0 +1,43 @@
+<div class="modal hide fade" id="checkout">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <span><i class="icon-credit-card" style="font-size: 40px; position: absolute; top: 10px;"></i><h3 style="padding-left: 50px;">Payment Information</h3></span>
+  </div>
+  <div id="payment_form_errors" class="alert alert-error hide"></div>
+  <div class="modal-body">
+  <%= form_tag payments_path, method: "post", :class => 'form-horizontal', :id => 'payment_form' do %>
+    <% @expiration_months = (1..12).to_a %>
+    <% @expiration_years = (2014..2022).to_a %>
+    <div class="control-group">
+      <%= label_tag :cardholder_name, "Cardholder's name", :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag :cardholder_name, "Ed Weng", placeholder: "John Smith" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag :card_number, "Card number", :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag :card_number, "4242424242424242", autocomplete: "off" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="card_expiration">
+        <%= label_tag :card_expiry_month, "Expiration date", :class => "control-label" %>
+        <div class="controls">
+          <span><%= select_tag :card_expiry_month, options_for_select(@expiration_months), :style => "width: 110px;" %></span>
+          <span><%= select_tag :card_expiry_year, options_for_select(@expiration_years), :style => "width: 110px;" %></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag :card_cvc, "CVC", :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag :card_cvc, "123", autocomplete: "off", placeholder: "123" %>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a id="submit_checkout" href="#" class="btn">Next Step</a>
+  </div>
+  <% end %>
+</div>

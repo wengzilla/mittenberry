@@ -1,0 +1,56 @@
+<div class="modal hide fade" id="shipping_details_modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <span><i class="icon-truck" style="font-size: 40px; position: absolute; top: 10px;"></i><h3 style="padding-left: 50px;">Shipping Information</h3></span>
+  </div>
+  <div id="shipping_form_errors" class="alert alert-error hide"></div>
+  <div class="modal-body">
+  <%= form_for current_order, :url => add_details_orders_path, :method => :post, :html => {:class => 'form-horizontal'} do |order_form| %>
+    <%= fields_for :shipping_detail do |s| %>
+      <div class="control-group">
+        <%= s.label :name, "Name", :class => "control-label" %>
+        <div class="controls">
+          <%= s.text_field :name, value: "Ed Weng", placeholder: "John Smith" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= s.label :street1, "Address Line 1", :class => "control-label" %>
+        <div class="controls">
+          <%= s.text_field :street1, value: "1255 NH Ave NW", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= s.label :street2, "Address Line 2", :class => "control-label" %>
+        <div class="controls">
+          <%= s.text_field :street2, value: "", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= s.label :city, "City", :class => "control-label" %>
+        <div class="controls">
+          <%= s.text_field :city, value: "Washington", autocomplete: "off" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= s.label :state, "State", :class => "control-label" %>
+        <div class="controls">
+          <%= s.select :state, options_for_select([""] + US_STATES), :class => "ls-text" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= s.label :postal_code, "Zip", :class => "control-label" %>
+        <div class="controls">
+          <%= s.text_field :postal_code, value: "20036", autocomplete: "off" %>
+        </div>
+      </div>
+    <% end %>
+    <%= fields_for :payment do |p| %>
+      <%= p.hidden_field :payment_token, :id => "stripe_token" %>
+      <%= p.hidden_field :response, :id => "stripe_response" %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <%= order_form.submit "Check Out" %>
+  </div>
+  <% end %>
+</div>

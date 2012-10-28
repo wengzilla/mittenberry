@@ -32,6 +32,8 @@ class OrderProductsController < ApplicationController
     end
   end
 
+  private
+
   def load_product
     @product = Product.find(params[:order_product].delete(:product_id))
 

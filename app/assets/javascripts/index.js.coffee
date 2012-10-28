@@ -18,13 +18,24 @@ Product =
           }
       },
       success: (data) ->
+        total_quantity = 0
         for o_p in data.order_products
-          console.log(o_p.id)
+          total_quantity += o_p.quantity
+
+        $('#total_quantity').html(total_quantity)
     });
 
 Payment =
+  formatted_billing: () =>
+    billing_info = Payment.response
+    console.log(billing_info)
+    "#{billing_info.card.name}<br>
+    #{billing_info.card.type}<br>
+    XXXX-XXXX-XXXX-#{billing_info.card.last4}<br>"
+
   stripeGetToken: () =>
     Stripe.createToken
+      name: $("#cardholder_name").val()
       number: $("#card_number").val()
       cvc: $("#card_cvc").val()
       exp_month: $("#card_expiry_month").val()
@@ -32,15 +43,55 @@ Payment =
     , Payment.stripeResponseHandler
 
   stripeResponseHandler: (status, response) =>
-    console.log(status)
+    console.log response
     if response.error
-      $(".payment_errors").text response.error.message
+      $("#payment_form_errors").text(response.error.message).show()
       $("#submit_checkout").removeAttr "disabled"
     else
       $form = $("#payment_form")
-      token = response["id"]
-      $form.append "<input type='hidden' name='stripe_token' value='" + token + "'/>"
-      $form.get(0).submit()
+      Payment.response = response
+      stripe_token = response["id"]
+      $("#shipping_details_modal").modal()
+      $("#stripe_token").val(stripe_token)
+      $("#stripe_response").val(JSON.stringify(response))
+
+Shipping =
+  validate: () =>
+    errors = []
+    unless $("#street1").val() then errors.push("A street is required.</br>")
+    unless $("#city").val() then errors.push("A city is required.</br>")
+    unless $("#state").val() then errors.push("A state is required.</br>")
+    unless $("#postal_code").val().length >= 5 then errors.push("A zipcode is required.</br>")
+    errors
+
+  address: () =>
+    address = {
+      'name': $("#name").val()
+      'street1': $("#street1").val(),
+      'street2': $("#street2").val(),
+      'city': $("#city").val(),
+      'state': $("#state").val(),
+      'postal_code': $("#postal_code").val(),
+    }
+
+  address_json: () =>
+    JSON.stringify(Shipping.address())
+
+  formatted_address: () =>
+    address = Shipping.address()
+    result = "<strong>#{address.name}</strong><br>
+     #{address.street1}<br>"
+    result += "#{address.street2}<br>" if address.street2.length > 0
+    result += "#{address.city}, #{address.state} #{address.postal_code}"
+
+  submit: () =>
+    errors = Shipping.validate()
+
+    unless _.isEmpty(errors)
+      $("#shipping_form_errors").show()
+      $("#shipping_form_errors").html(errors)
+    else
+      Confirmation.show()
 
 jQuery ->
   $('.color').hover( (el) => 
@@ -56,3 +107,8 @@ jQuery ->
     $("#submit_checkout").attr "disabled", "disabled"
     Payment.stripeGetToken()
     false
+
+  $("#submit_shipping_details").click (event) ->
+    Shipping.submit()
+    false
+    

@@ -9,4 +9,7 @@ class OrderProduct < ActiveRecord::Base
   extend Forwardable
   def_delegators :product, :name
 
+  def subtotal
+    price * quantity
+  end
 end

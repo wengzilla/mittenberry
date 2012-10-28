@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_order
 
   def create_new_order
-    Order.new()
+    Order.new
   end
 
   def get_order_from_cookie
@@ -18,5 +18,11 @@ class ApplicationController < ActionController::Base
     @current_order = order
     cookies["mb_order_id"]  = { :value => @current_order.id,
                                :expires => Order::COOKIE_DURATION.from_now }
+  end
+
+  def clear_order_from_cookie
+    current_order
+    cookies["mb_order_id"] = nil
+    current_order
   end
 end

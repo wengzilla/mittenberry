@@ -1,0 +1,66 @@
+<div class='container center' style="font-family: 'Pacifico'; font-size: 100px; line-height: 200px; color: #227CA1;">
+  <div class='row'>the mittenberry</div>
+</div>
+
+<style>
+  tr {
+    text-align:right;
+  }
+</style>
+
+<div class="container">
+  <% if @payment.errors.any? %>
+    <div class="row">
+      <div id="confirmation_errors" class="alert alert-error span8 offset2">
+        <% @payment.errors.messages[:base].each do |error| %>
+          <%= error %><br />
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div id="confirmation_shipping" class="span4 offset2">
+      Shipping Address:
+      <address id="formatted_shipping">
+        <%= @order.shipping_detail.to_s_wrapped %>
+      </address>
+    </div>
+    <div id="confirmation_billing" class="span4">
+      <%= "Payment will be charged to #{@order.payment.card_type} #{@order.payment.formatted_last_four}." %>
+    </div>
+  </div>
+
+  <div class="row">
+      <table class="span8 table table-striped offset2">
+        <thead>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </thead>
+      <% @order.order_products.each do |o_p| %>
+        <tr>
+          <td><%= o_p.name %></td>
+          <td><%= o_p.price %></td>
+          <td><%= o_p.quantity %></td>
+          <td><%= o_p.subtotal %></td>
+        </tr>
+      <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Total: </td>
+          <td><%= @order.total %></td>
+        </tr>
+      </table>
+
+    <div class="span2 offset8">
+      <form action=<%="#{place_order_path(@order)}"%> id="confirmation_form" method="POST">
+        <input type="submit" class="btn btn-primary" value="Check Out"></input>
+      </form>
+    </div>
+  </div>
+
+
+</div>
