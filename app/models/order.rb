@@ -24,7 +24,7 @@ class Order < ActiveRecord::Base
   end
 
   def total
-    BigDecimal.new(total_in_cents) / 100
+    BigDecimal.new(total_in_cents.to_s) / 100
   end
 
   def is_valid?
